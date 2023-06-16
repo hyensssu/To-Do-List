@@ -1,0 +1,146 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+button {
+  outline: 0;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 100ms ease-out;
+}
+
+button:hover {
+  transform: scale(1.02);
+}
+
+input {
+  outline: none;
+  border: none;
+  height: 110%;
+  border-radius: 8px;
+}
+
+.container {
+  margin-top: 20px;
+  border-top: 5px solid black;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* header */
+.head {
+  width: 1200px;
+  padding: 6px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid lightgray;
+}
+
+/* inputSection */
+.inputSection {
+  width: 1200px;
+  padding: 28px 26px;
+  background-color: rgb(235, 235, 235);
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.inputBoxs {
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputTitle {
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+.inputContent {
+  margin-left: 10px;
+}
+
+.addBtn {
+  color: white;
+  background-color: rgb(12, 85, 12);
+  padding: 10px 25px;
+}
+
+/* Working/Done Section */
+
+main {
+  width: 1200px;
+}
+
+main h2 {
+  font-size: 28px;
+  padding: 8px;
+  margin-bottom: 30px;
+  border-bottom: 3px dotted lightgray;
+}
+
+.workingSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-bottom: 500px;
+  display: inline-block;
+}
+
+.containerBox {
+  padding: 30px 20px;
+  border: 3px solid rgb(12, 85, 12);
+  border-radius: 8px;
+  text-align: start;
+  margin-right: 30px;
+  margin-bottom: 30px;
+}
+
+.workingSection h1 {
+  margin-bottom: 14px;
+}
+
+.workingSection p {
+  margin-bottom: 24px;
+}
+
+.btnBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deleteBtn {
+  border: 2px solid rgb(253, 60, 12);
+  background-color: transparent;
+  padding: 8px 25px;
+  margin-right: 10px;
+}
+
+.deleteBtn:hover {
+  background-color: rgb(253, 60, 12);
+  color: white;
+  font-weight: 700;
+}
+
+.completeBtn {
+  border: 2px solid rgb(12, 85, 12);
+  background-color: transparent;
+  padding: 8px 25px;
+}
+
+.completeBtn:hover {
+  background-color: rgb(12, 85, 12);
+  color: white;
+  font-weight: 700;
+}
