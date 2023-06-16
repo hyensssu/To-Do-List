@@ -1,31 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
-
+import Header from './component/Header';
+import InputSection from './component/InputSection';
+import TodoLists from './component/TodoLists';
 function App() {
   // state---------------------------------------------------
 
-  // todo working
+  // lists
   const [todo, setTodo] = useState([
     {
       id: 1,
       title: 'javascript',
-      content: '혼자 공부하는 자바스크립트 정독'
+      content: '혼자 공부하는 자바스크립트 정독',
+      isDone: false
     },
     {
       id: 2,
       title: 'react',
-      content: '원장튜터님과 함께하는 리액트 완강'
+      content: '원장튜터님과 함께하는 리액트 완강',
+      isDone: false
     },
     {
       id: 3,
       title: 'html/css',
-      content: '자투리시간에 확실히 익히기'
+      content: '자투리시간에 확실히 익히기',
+      isDone: false
     }
   ]);
-
-  // todo Done
-  const [done, setDone] = useState([]);
 
   // title
   const [title, setTitle] = useState('');
@@ -33,9 +35,6 @@ function App() {
   // content
   const [content, setContent] = useState('');
 
-  // btn state
-  const [state, setState] = useState(false);
-  
   // handler------------------------------------------------
 
   // change title
@@ -49,7 +48,8 @@ function App() {
   };
 
   // add list
-  const clickAddButtonHandler = () => {
+  const clickAddButtonHandler = e => {
+    e.preventDefault();
     const newTodo = {
       id: todo.length + 1,
       title: title,
@@ -65,96 +65,73 @@ function App() {
     const leftTodo = todo.filter(item => {
       return item.id !== id;
     });
-    const leftDone = done.filter(item => {
-      return item.id !== id;
-    });
+
     setTodo(leftTodo);
-    setDone(leftDone);
   };
 
-  // except working list, add done list
+  // from working to done
   const clickMoveToDoneButtonHandler = id => {
-    const moveToDone = todo.filter(item => {
-      return item.id === id;
+    const upDateTodo = todo.map(item => {
+      if (item.id === id) {
+        return { ...item, isDone: true };
+      } else {
+        return item;
+      }
     });
-    const removeWorking = todo.filter(item => {
-      return item.id !== id;
-    });
-    setState(!state);
-    setDone([...done, ...moveToDone]);
-    setTodo(removeWorking);
+    setTodo(upDateTodo);
   };
 
-  // except done list, add working list
+  // from done to working
   const clickMoveToWorkingButtonHandler = id => {
-    const moveToWorking = done.filter(item => {
-      return item.id === id;
+    const upDateTodo = todo.map(item => {
+      if (item.id === id) {
+        return { ...item, isDone: false };
+      } else {
+        return item;
+      }
     });
-
-    const removeDone = done.filter(item => {
-      return item.id !== id;
-    });
-    setState(!state);
-    setTodo([...todo, ...moveToWorking]);
-    setDone(removeDone);
+    setTodo(upDateTodo);
   };
+
+  // filteringList
+  const finishedTodo = todo.filter(item => item.isDone);
+  const unfinishedTodo = todo.filter(item => !item.isDone);
 
   return (
     <>
       <div className="container">
-        <header className="head">
-          <h1>My Todo List</h1>
-          <span>React</span>
-        </header>
+        <Header></Header>
 
-        <section className="inputSection">
-          <div className="inputBoxs">
-            <label for="inputTitle">제목 : </label>
-            <input
-              type="text"
-              id="inputTitle"
-              className="inputTitle"
-              value={title}
-              onChange={titleChangeHandler}
-            ></input>
-            <label for="inputContent">내용 : </label>
-            <input
-              type="text"
-              id="inputContent"
-              className="inputContent"
-              value={content}
-              onChange={contentChangeHandler}
-            ></input>
-          </div>
-          <button className="addBtn" onClick={clickAddButtonHandler}>
-            추가하기
-          </button>
-        </section>
+        <InputSection
+          title={title}
+          titleChangeHandler={titleChangeHandler}
+          content={content}
+          contentChangeHandler={contentChangeHandler}
+          clickAddButtonHandler={clickAddButtonHandler}
+        ></InputSection>
 
         <main>
           <h2>Working...🙂</h2>
-          {todo.map((item, i) => {
+          {unfinishedTodo.map((item, i) => {
             return (
-              <RenderSpot
+              <TodoLists
                 item={item}
                 clickDeleteButtonHandler={clickDeleteButtonHandler}
                 clickMoveToDoneButtonHandler={clickMoveToDoneButtonHandler}
                 clickMoveToWorkingButtonHandler={clickMoveToWorkingButtonHandler}
-                state={state}
-              ></RenderSpot>
+              ></TodoLists>
             );
           })}
-          {/* -------------------------------------------------------------------- */}
+
           <h2>Done...😍</h2>
-          {done.map((item, i) => {
+          {finishedTodo.map((item, i) => {
             return (
-              <RenderSpot
+              <TodoLists
                 item={item}
                 clickDeleteButtonHandler={clickDeleteButtonHandler}
                 clickMoveToDoneButtonHandler={clickMoveToDoneButtonHandler}
                 clickMoveToWorkingButtonHandler={clickMoveToWorkingButtonHandler}
-                state={state}
-              ></RenderSpot>
+              ></TodoLists>
             );
           })}
         </main>
@@ -162,41 +139,5 @@ function App() {
     </>
   );
 }
-
-const RenderSpot = props => {
-  return (
-    <>
-      <section key={props.item.id} className="workingSection">
-        <div className="containerBox">
-          <h1>{props.item.title}</h1>
-          <p>{props.item.content}</p>
-          <div className="btnBox">
-            <button
-              className="deleteBtn"
-              onClick={() => props.clickDeleteButtonHandler(props.item.id)}
-            >
-              삭제하기
-            </button>
-            {props.state === false ? (
-              <button
-                className="completeBtn"
-                onClick={() => props.clickMoveToDoneButtonHandler(props.item.id)}
-              >
-                완료
-              </button>
-            ) : (
-              <button
-                className="completeBtn"
-                onClick={() => props.clickMoveToWorkingButtonHandler(props.item.id)}
-              >
-                취소
-              </button>
-            )}
-          </div>
-        </div>
-      </section>
-    </>
-  );
-};
 
 export default App;
