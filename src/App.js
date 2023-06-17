@@ -73,7 +73,7 @@ function App() {
   const clickMoveToDoneButtonHandler = id => {
     const upDateTodo = todo.map(item => {
       if (item.id === id) {
-        return { ...item, isDone: true };
+        return { ...item, isDone: false };
       } else {
         return item;
       }
@@ -85,7 +85,7 @@ function App() {
   const clickMoveToWorkingButtonHandler = id => {
     const upDateTodo = todo.map(item => {
       if (item.id === id) {
-        return { ...item, isDone: false };
+        return { ...item, isDone: true };
       } else {
         return item;
       }
